@@ -94,12 +94,14 @@ namespace MTZapocet.Pages
 
             _FemaleRB.CheckedChanged += (s, e) =>
             {
-                ViewModel.User.gender = "female";
+                if (e.Value)
+                    ViewModel.User.gender = "female";
             };
 
             _MaleRB.CheckedChanged += (s, e) =>
             {
-                ViewModel.User.gender = "male";
+                if (e.Value)
+                    ViewModel.User.gender = "male";
             };
 
             _AddBtn.Clicked += async (s, e) =>

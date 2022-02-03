@@ -17,6 +17,8 @@ namespace MTZapocet.Pages
         public UsersPage()
         {
             NavigationPage.SetHasBackButton(this, false);
+            var menu = new Menu();
+            
             ViewModel = new ViewModels.UsersPageVM();
             BindingContext = ViewModel;
             _Grid = new Grid()

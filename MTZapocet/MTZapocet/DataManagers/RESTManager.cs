@@ -47,7 +47,28 @@ namespace MTZapocet.DataManagers
                 return string.Empty;
         }
 
+        public async Task<string> Put(string addParams, string content)
+        {
+            HttpResponseMessage response = await client.PutAsync(url + addParams.ToLower(), new StringContent(content, Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+                return string.Empty;
+        }
 
+
+        public async Task<string> Delete(string addParams)
+        {
+            HttpResponseMessage response = await client.DeleteAsync(url + addParams.ToLower());
+            if (response.IsSuccessStatusCode)
+            {
+                return "true";
+            }
+            else
+                return string.Empty;
+        }
 
 
 
