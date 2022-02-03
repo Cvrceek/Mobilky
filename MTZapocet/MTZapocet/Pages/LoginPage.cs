@@ -10,7 +10,7 @@ namespace MTZapocet.Pages
 {
     public class LoginPage : ContentPage
     {
-        LoginPageVM ViewModel = new LoginPageVM();
+        LoginPageVM ViewModel;
 
 
         StackLayout _StackLayout;
@@ -21,6 +21,7 @@ namespace MTZapocet.Pages
 
         public LoginPage()
         {
+            ViewModel = new LoginPageVM();
             BindingContext = ViewModel;
             NavigationPage.SetHasNavigationBar(this, false);
 
@@ -37,7 +38,7 @@ namespace MTZapocet.Pages
                 Margin = 16
             };
 
-            _UserName.SetBinding(Entry.TextProperty, "ViewModel.Username");
+            _UserName.SetBinding(Entry.TextProperty, "Username");
 
             _LoginBtn = new Button()
             {

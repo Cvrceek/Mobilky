@@ -11,11 +11,14 @@ namespace MTZapocet.Pages
         ListView _ListView;
         ImageButton _AddBtn;
 
+        ViewModels.UsersPageVM ViewModel;
+
 
         public UsersPage()
         {
             NavigationPage.SetHasBackButton(this, false);
-
+            ViewModel = new ViewModels.UsersPageVM();
+            BindingContext = ViewModel;
             _Grid = new Grid()
             {
                 RowDefinitions = new RowDefinitionCollection()
@@ -39,6 +42,7 @@ namespace MTZapocet.Pages
                 
             };
             _ListView.ItemTemplate = new DataTemplate(() => new ViewCell() { View = dataTemplateView() });
+            _ListView.SetBinding(ListView.ItemsSourceProperty, "Users", BindingMode.OneWay);
 
             _AddBtn = new ImageButton()
             {
@@ -56,6 +60,17 @@ namespace MTZapocet.Pages
             _Grid.Children.Add(_ListView, 0, 0);
             _Grid.Children.Add(_AddBtn, 0, 0);
             Content = _Grid;
+
+
+            _ListView.ItemTapped += async (s, e) =>
+            {
+                await Navigation.PushAsync(new Pages.UserPage(((Models.User)e.Item).id));
+            };
+
+            _AddBtn.Clicked += async (s, e) =>
+            {
+                await Navigation.PushAsync(new Pages.AddUserPage());
+            };
         }
 
 
@@ -63,7 +78,6 @@ namespace MTZapocet.Pages
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _ListView.ItemsSource = App.LocalDataStorage.Users;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,19 +31,19 @@ namespace MTZapocet.ViewModels
         {
             if(Username == "Administrator")
             {
-                List<Models.User> users;
+                ObservableCollection<Models.User> users;
                 var response = await App.RestManager.Get("Users");
                 if (string.IsNullOrEmpty(response))
                     return false;
                 else
-                    users = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.User>>(response);
+                    users = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<Models.User>>(response);
 
-                List<Models.ToDo> todos;
+                ObservableCollection<Models.ToDo> todos;
                 response = await App.RestManager.Get("Todos");
                 if (string.IsNullOrEmpty(response))
                     return false;
                 else
-                    todos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.ToDo>>(response);
+                    todos = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<Models.ToDo>>(response);
 
 
                 App.LocalDataStorage.Users = users;
@@ -67,12 +68,12 @@ namespace MTZapocet.ViewModels
                 else
                     user = Newtonsoft.Json.JsonConvert.DeserializeObject<Models.User>(response);
 
-                List<Models.ToDo> todos;
+                ObservableCollection<Models.ToDo> todos;
                 response = await App.RestManager.Get("Todos?user_id=" + user.id);
                 if (string.IsNullOrEmpty(response))
                     return false;
                 else
-                    todos = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Models.ToDo>>(response);
+                    todos = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<Models.ToDo>>(response);
 
 
                 App.LocalDataStorage.LoggedUser = user;

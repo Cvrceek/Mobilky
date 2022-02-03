@@ -1,6 +1,7 @@
 ﻿using MTZapocet.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace MTZapocet.DataManagers
     {
         public LocalDataManager() 
         {
-            Users = new List<User>()
+            Users = new ObservableCollection<User>()
             {
                 new User()
                 {
@@ -22,7 +23,7 @@ namespace MTZapocet.DataManagers
                 }
             };
 
-            Todos = new List<ToDo>()
+            Todos = new ObservableCollection<ToDo>()
             {
                 new ToDo()
                 {
@@ -40,8 +41,8 @@ namespace MTZapocet.DataManagers
         }
 
 
-        public List<ToDo> Todos { get; set; }
-        public List<User> Users { get; set; }
+        public ObservableCollection<ToDo> Todos { get; set; }
+        public ObservableCollection<User> Users { get; set; }
 
 
         public async Task SaveState()

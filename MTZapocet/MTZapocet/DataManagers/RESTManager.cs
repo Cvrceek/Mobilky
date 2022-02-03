@@ -36,6 +36,16 @@ namespace MTZapocet.DataManagers
                 return string.Empty;
         }
         
+        public async Task<string> Post(string addParams, string content)
+        {
+            HttpResponseMessage response = await client.PostAsync(url + addParams.ToLower(), new StringContent(content, Encoding.UTF8, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            else
+                return string.Empty;
+        }
 
 
 
