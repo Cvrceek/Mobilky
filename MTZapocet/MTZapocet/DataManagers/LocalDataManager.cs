@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MTZapocet.DataManagers
 {
@@ -42,6 +43,11 @@ namespace MTZapocet.DataManagers
         public List<ToDo> Todos { get; set; }
         public List<User> Users { get; set; }
 
+
+        public async Task SaveState()
+        {
+
+        }
 
         #region LoggedUser
         public User LoggedUser { get; set; }

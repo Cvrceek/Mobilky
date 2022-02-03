@@ -8,12 +8,13 @@ namespace MTZapocet
 {
     public partial class App : Application
     {
-        public static LocalDataManager LocalDataStorage { get; set; }
+        public static LocalDataManager LocalDataStorage { get; private set; }
+        public static RestManager RestManager { get; private set; }
         public App()
         {
 
             LocalDataStorage = new LocalDataManager();
-
+            RestManager = new RestManager();
 
 
             InitializeComponent();

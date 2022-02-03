@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTZapocet.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,9 @@ namespace MTZapocet.Pages
 {
     public class LoginPage : ContentPage
     {
+        LoginPageVM ViewModel = new LoginPageVM();
+
+
         StackLayout _StackLayout;
         Image _Image;
         Entry _UserName;
@@ -17,6 +21,7 @@ namespace MTZapocet.Pages
 
         public LoginPage()
         {
+            BindingContext = ViewModel;
             NavigationPage.SetHasNavigationBar(this, false);
 
             _Image = new Image()
@@ -28,9 +33,11 @@ namespace MTZapocet.Pages
 
             _UserName = new Entry()
             {
-                Placeholder = "Token",
+                Placeholder = "Uživatelské jméno",
                 Margin = 16
             };
+
+            _UserName.SetBinding(Entry.TextProperty, "ViewModel.Username");
 
             _LoginBtn = new Button()
             {
@@ -55,52 +62,32 @@ namespace MTZapocet.Pages
             {
                 if (string.IsNullOrWhiteSpace(_UserName.Text))
                     await DisplayAlert("Nezadané uživatelské jméno", "Pro přihlášení je nutné zadat uživatelské jméno", "OK");
-                else if (!string.IsNullOrWhiteSpace(_UserName.Text) && _UserName.Text == admin)
+                else if (!string.IsNullOrWhiteSpace(ViewModel.Username))
                 {
-                    App.LocalDataStorage.LoggedUser = new Models.User()
+                    if(await ViewModel.Login())
                     {
-                        email = "admin@admin.cz",
-                        id = -666,
-                        gender = "male",
-                        status = "active",
-                        name = "Admin Administratorovič"
-                    };
-
-                    Navigation.InsertPageBefore(new UsersPage(), this);
-                    await Navigation.PopAsync();
+                        if (ViewModel.IsAdmin)
+                        {
+                            Navigation.InsertPageBefore(new UsersPage(), this);
+                            await Navigation.PopAsync();
+                        }
+                        else
+                        {
+                            Navigation.InsertPageBefore(new TasksPage(), this);
+                            await Navigation.PopAsync();
+                        }
+                    }
                 }
                 else
                 {
-                    //login vole dodělej
-
-                    if (true)
-                    {
-                        App.LocalDataStorage.LoggedUser = new Models.User()
-                        {
-                            email = "admin@admin.cz",
-                            id = 666,
-                            gender = "male",
-                            status = "active",
-                            name = "Admin Administratorovič"
-                        };
-
-                        Navigation.InsertPageBefore(new TasksPage(), this);
-                        await Navigation.PopAsync();
-                    }
-                    else
-                    {
-                        await DisplayAlert("Neplatné uživatelské jméno", "Pro přihlášení je nutné zadat správné uživatelské jméno", "OK");
-                    }
-
+                    await DisplayAlert("Neplatné uživatelské jméno", "Pro přihlášení je nutné zadat správné uživatelské jméno", "OK");
                 }
             };
         }
 
         protected override void OnAppearing()
         {
-#if DEBUG
-            _UserName.Text = "Administrator";
-#endif
+
 
             base.OnAppearing();
         }
