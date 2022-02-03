@@ -1,4 +1,5 @@
-﻿using MTZapocet.Pages;
+﻿using MTZapocet.DataManagers;
+using MTZapocet.Pages;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -7,10 +8,15 @@ namespace MTZapocet
 {
     public partial class App : Application
     {
+        public static LocalDataManager LocalDataStorage { get; set; }
         public App()
         {
+
+            LocalDataStorage = new LocalDataManager();
+
+
+
             InitializeComponent();
-            
             MainPage = new NavigationPage(new LoginPage());
         }
 

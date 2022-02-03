@@ -32,6 +32,8 @@ namespace MTZapocet.DataManagers
                     user_id = 1
                 }
             };
+
+            LoggedUser = new User();
         
         
         }
@@ -39,6 +41,11 @@ namespace MTZapocet.DataManagers
 
         public List<ToDo> Todos { get; set; }
         public List<User> Users { get; set; }
+
+
+        #region LoggedUser
+        public User LoggedUser { get; set; }
+        #endregion
 
 
 

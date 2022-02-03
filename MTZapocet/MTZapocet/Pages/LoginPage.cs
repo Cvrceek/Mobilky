@@ -54,13 +54,44 @@ namespace MTZapocet.Pages
             _LoginBtn.Clicked += async (s, e) =>
             {
                 if (string.IsNullOrWhiteSpace(_UserName.Text))
-                    await DisplayAlert("Nezadaný token", "Pro přihlášení je nutné zadat ověřovací token", "OK");
-                else if (!string.IsNullOrWhiteSpace(_UserName.Text) && _UserName.Text != "2b35e5dc854f2a8f8701719747fc6a46503265b1cd74f03e697ab67db23f803b")
-                    await DisplayAlert("Neplatný token", "Zadaný token není platný", "OK");
+                    await DisplayAlert("Nezadané uživatelské jméno", "Pro přihlášení je nutné zadat uživatelské jméno", "OK");
+                else if (!string.IsNullOrWhiteSpace(_UserName.Text) && _UserName.Text == admin)
+                {
+                    App.LocalDataStorage.LoggedUser = new Models.User()
+                    {
+                        email = "admin@admin.cz",
+                        id = -666,
+                        gender = "male",
+                        status = "active",
+                        name = "Admin Administratorovič"
+                    };
+
+                    Navigation.InsertPageBefore(new UsersPage(), this);
+                    await Navigation.PopAsync();
+                }
                 else
                 {
-                    Navigation.InsertPageBefore(new DashboardPage(), this);
-                    await Navigation.PopAsync();
+                    //login vole dodělej
+
+                    if (true)
+                    {
+                        App.LocalDataStorage.LoggedUser = new Models.User()
+                        {
+                            email = "admin@admin.cz",
+                            id = 666,
+                            gender = "male",
+                            status = "active",
+                            name = "Admin Administratorovič"
+                        };
+
+                        Navigation.InsertPageBefore(new TasksPage(), this);
+                        await Navigation.PopAsync();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Neplatné uživatelské jméno", "Pro přihlášení je nutné zadat správné uživatelské jméno", "OK");
+                    }
+
                 }
             };
         }
@@ -68,12 +99,15 @@ namespace MTZapocet.Pages
         protected override void OnAppearing()
         {
 #if DEBUG
-            _UserName.Text = "2b35e5dc854f2a8f8701719747fc6a46503265b1cd74f03e697ab67db23f803b";
+            _UserName.Text = "Administrator";
 #endif
 
             base.OnAppearing();
         }
 
-        
+
+
+
+
     }
 }
